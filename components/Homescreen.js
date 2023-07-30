@@ -5,20 +5,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/color';
 import * as ScreenOrientation from "expo-screen-orientation";
 
-import StartGameScreen from "./StartGameScreen"
-
-
 
 export default function Homescreen() {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    // let screen = <StartGameScreen />;
     const [isIntervalRunning, setIsIntervalRunning] = useState('0');
     const [enteredNumber2, setenteredNumber2] = useState('------');
 
     const intervalRef = React.useRef(null);
     const startGenerate = () => {
             setIsIntervalRunning('1');
-            intervalRef.current = setInterval(getGenerate, 1000); // Replace 1000 with your desired interval time in milliseconds (1 second in this example) 
+            intervalRef.current = setInterval(getGenerate, 30); 
     }
 
     const stopGenerate = () => {
@@ -48,7 +44,7 @@ export default function Homescreen() {
             >
                 <SafeAreaView style={styles.rootScreen}>
                     <View style={styles.inputContainer}>
-                        <TextInput style={styles.numberInput} autoCapitalize="none" autoCorrect={false}
+                        <TextInput style={styles.numberInput} autoCapitalize="true" autoCorrect={false}
                             value={enteredNumber2}
                         />
                     </View>
@@ -114,7 +110,7 @@ const styles = StyleSheet.create({
         fontSize: 45,
         borderBottomColor: Colors.primary800,
         borderBottomWidth: 2,
-        color: Colors.primary800,
+        color: '#fff',
         marginVertical: 8,
         fontWeight: 'bold',
         textAlign: 'center'
