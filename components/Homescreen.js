@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, ImageBackground, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, SafeAreaView, TouchableOpacity, TextInput, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/color';
 import * as ScreenOrientation from "expo-screen-orientation";
+import { Audio } from 'expo-av';
 
 
 export default function Homescreen() {
@@ -13,54 +14,70 @@ export default function Homescreen() {
 
     const intervalRef = React.useRef(null);
     const startGenerate = () => {
-            setIsIntervalRunning('1');
-            intervalRef.current = setInterval(getGenerate, 30); 
+        setIsIntervalRunning('1');
+        intervalRef.current = setInterval(getGenerate, 30);
     }
 
     const stopGenerate = () => {
         setIsIntervalRunning('0');
         clearInterval(intervalRef.current);
     }
-    
-    const getGenerate = () => {
-        let myArr = ['AAA', 'BBB', 'CCC', 'DDD',
-            'EEE', 'FFF', 'GGG', 'HHH'];
-        getRandomNumber(myArr);
-      };
 
-    
+    const getGenerate = () => {
+        let myArr = ['AAAAAAA', 'BBBBBBB', 'CCCCCCC', 'DDDDDDDD',
+            'EEEEEEEE', 'FFFFFFF', 'GGGGGGGG', 'HHHHHHHH'];
+        getRandomNumber(myArr);
+    };
+
+
     const getRandomNumber = (myArr) => {
         const randomObject = myArr[Math.floor(Math.random() * myArr.length)];
         setenteredNumber2(randomObject);
     }
     return (
-        <LinearGradient colors={[Colors.primary400, Colors.accent500]} style={styles.rootScreen}>
+        <LinearGradient colors={[Colors.accent500, Colors.accent600]} style={styles.rootScreen}>
 
             <ImageBackground
-                source={require('../assets/images/background.png')}
+                source={require('../assets/images/bg_aniv2.png')}
                 resizeMode="cover"
                 style={styles.rootScreen}
                 imageStyle={styles.backgroundImage}
             >
-                <SafeAreaView style={styles.rootScreen}>
-                    <View style={styles.inputContainer}>
-                        <TextInput style={styles.numberInput} autoCapitalize="true" autoCorrect={false}
-                            value={enteredNumber2}
-                        />
+                <SafeAreaView style={[styles.rootScreen, { justifyContent: 'center' }]}>
+                    <View style={[styles.inputContainer]}>
+                        <Text style={[styles.numberInput,]}>{enteredNumber2}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-                    {isIntervalRunning=='0' && (
-                        <TouchableOpacity onPress={startGenerate} style={styles.btn_start}>
-                            <Text>START</Text>
-                        </TouchableOpacity>
-                    )}
-                    {isIntervalRunning=='1' && (
-                        <TouchableOpacity onPress={stopGenerate} style={styles.btn_start}>
-                        <Text>STOP</Text>
-                        </TouchableOpacity> 
-                    )}
-                    
-                        
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+                        <View style={{ width: 100, height: 100 }}>
+                            {isIntervalRunning == '0' && (
+
+                                <TouchableOpacity onPress={startGenerate} >
+                                    <Image
+                                        style={styles.image}
+                                        source={require('../assets/images/start.png')}
+                                        contentFit="cover"
+                                        transition={1000}
+                                    />
+                                </TouchableOpacity>
+
+                                // <TouchableOpacity onPress={startGenerate} style={styles.btn_start}>
+                                //     <Text>START</Text>
+                                // </TouchableOpacity>
+                            )}
+                            {isIntervalRunning == '1' && (
+                                <TouchableOpacity onPress={stopGenerate} >
+                                    <Image
+                                        style={styles.image}
+                                        source={require('../assets/images/stop.png')}
+                                        contentFit="cover"
+                                        transition={1000}
+                                    />
+                                </TouchableOpacity>
+
+                            )}
+                        </View>
+
+
                     </View>
 
                 </SafeAreaView>
@@ -77,7 +94,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     backgroundImage: {
-        opacity: 0.15,
+        opacity: 0.9,
     },
     btn_start: {
         backgroundColor: 'red',
@@ -92,27 +109,31 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // flex: 1,
-        marginTop: '10%',
-        marginHorizontal: 24,
-        padding: 16,
-        backgroundColor: Colors.primary600,
+        marginTop: '8%',
+        marginHorizontal: '15%',
+        padding: 8,
+        backgroundColor: '#fff',
         borderRadius: 8,
         elevation: 4,
         shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 6,
-        shadowOpacity: 0.25,
-        opacity: 0.8,
+        shadowOffset: { width: 0, height: 3 },
+        shadowRadius: 10,
+        shadowOpacity: 0.5,
+        opacity: 1,
     },
     numberInput: {
-        height: 50,
+        height: 80,
         width: '100%',
-        fontSize: 45,
+        fontSize: 60,
         borderBottomColor: Colors.primary800,
-        borderBottomWidth: 2,
-        color: '#fff',
-        marginVertical: 8,
+        borderBottomWidth: 0,
+        color: '#000',
+        marginVertical: 2,
         fontWeight: 'bold',
         textAlign: 'center'
+    },
+    image: {
+        width: '100%',
+        height: '100%',
     },
 });
