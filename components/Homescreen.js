@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, ImageBackground, SafeAreaView, TouchableOpacity, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, SafeAreaView, TouchableOpacity, TextInput, Image, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/color';
 import * as ScreenOrientation from "expo-screen-orientation";
@@ -10,21 +10,26 @@ import { Audio } from 'expo-av';
 
 
 export default function Homescreen() {
+    const [isLoading, setisLoading] = useState('0');
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const [isIntervalRunning, setIsIntervalRunning] = useState('0');
     const [enteredNumber2, setenteredNumber2] = useState('------');
     const [arrData, setarrData] = useState([]);
+    const [detailArr, setdetailArr] = useState([]);
+    const [resultData, setresultData] = useState('');
 
     const intervalRef = React.useRef(null);
+
     const startGenerate = () => {
         // playSound();
-        getArrLC();
+
         setIsIntervalRunning('1');
         intervalRef.current = setInterval(getGenerate, 30);
     }
 
     const stopGenerate = () => {
-        stopSound();
+        findPersonByName();
+        // stopSound();
         setIsIntervalRunning('0');
         clearInterval(intervalRef.current);
     }
@@ -32,48 +37,76 @@ export default function Homescreen() {
     const getGenerate = () => {
         let myArr = ['AAAAAAA', 'BBBBBBB', 'CCCCCCC', 'DDDDDDDD',
             'EEEEEEEE', 'FFFFFFF', 'GGGGGGGG', 'HHHHHHHH'];
-        getRandomNumber(myArr);
+        getRandomNumber(arrData);
     };
 
     const getRandomNumber = (myArr) => {
         const randomObject = myArr[Math.floor(Math.random() * myArr.length)];
         setenteredNumber2(randomObject);
     }
-    
-    const getArrLC = async () => {
-        let myArr = ['AAAAAAA', 'BBBBBBB', 'CCCCCCC', 'DDDDDDDD',
-            'EEEEEEEE', 'FFFFFFF', 'GGGGGGGG', 'HHHHHHHH'];
 
-        fetch('https://admin.digitalevent.online/api/lc')
-          .then((response) => response.json())
-          .then((json) => {
-            console.log([json]);
-            console.log(myArr);
-          })
-          .catch((error) => {console.log(error)});
-      }
 
-    // sound
-    const soundObject = new Audio.Sound();
 
-    const playSound = async () => {
+    useEffect(() => {
+        urlgetArrLC();
+        getDetailLC();
+    }, []);
+
+
+    const urlgetArrLC = async () => {
+        fetch('https://admin.digitalevent.online/api/lcList')
+            .then((response) => response.json())
+            .then((json) => {
+                setarrData(json);
+                setisLoading('1');
+            })
+            .catch((error) => { console.log(error) });
+    }
+
+    const getDetailLC = async () => {
+        setisLoading('0');
+        fetch('https://admin.digitalevent.online/api/lsFullArray')
+            .then((response) => response.json())
+            .then((json) => {
+                setdetailArr(json);
+                // saveArrLC(JSON.stringify(json));
+                // console.log(JSON.stringify(json));
+                setisLoading('1');
+            })
+            .catch((error) => { console.log(error) });
+    }
+
+    const findPersonByName = () => {
+        const bruno =  detailArr.find((person) => person.unique_code === enteredNumber2);
+        setresultData(bruno.fullname)
+        console.log(bruno.fullname);
+    };
+
+
+    const keyAsync = 'arrLc';
+    const getArrLC = () => {
         try {
-          await soundObject.loadAsync(require('../assets/song.mp3'));
-          await soundObject.playAsync();
+            AsyncStorage.getItem(keyAsync).then(value => {
+                if (value != null) {
+                    // console.log(value);
+                    const bruno =  value.find((person) => person.nik === '971123');
+                    console.log(bruno);
+                } else {
+                    getDetailLC();
+                }
+            })
         } catch (error) {
-          console.error('Error playing sound:', error);
+            console.log(error);
         }
-      };
-    
-      const stopSound = async () => {
+    }
+
+    const saveArrLC = async jsonValue => {
         try {
-        await soundObject.loadAsync(require('../assets/song.mp3'));
-          await soundObject.pauseAsync();
+            await AsyncStorage.setItem(keyAsync, jsonValue);
         } catch (error) {
-          console.error('Error stopping sound:', error);
+            console.log(error);
         }
-      };
-      // end sound
+    }
     return (
         <LinearGradient colors={[Colors.accent500, Colors.accent600]} style={styles.rootScreen}>
             <StatusBar hidden />
@@ -84,22 +117,31 @@ export default function Homescreen() {
                 imageStyle={styles.backgroundImage}
             >
                 <SafeAreaView style={[styles.rootScreen, { justifyContent: 'center' }]}>
-                    <View style={[styles.inputContainer]}>
-                        <Text style={[styles.numberInput,]}>{enteredNumber2}</Text>
-                    </View>
+                    {isLoading == '1' &&
+                        <View style={[styles.inputContainer]}>
+                            <Text style={[styles.numberInput,]}>{enteredNumber2}</Text>
+                        </View>
+                    }
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+                        <Text>{resultData}</Text>
                         <View style={{ width: 100, height: 100 }}>
-                           
+
                             {isIntervalRunning == '0' && (
-                                
-                                <TouchableOpacity onPress={startGenerate} >
-                                    <Image
-                                        style={styles.image}
-                                        source={require('../assets/images/start.png')}
-                                        contentFit="cover"
-                                        transition={1000}
-                                    />
-                                </TouchableOpacity>
+                                <>
+                                    {isLoading == '1' &&
+                                        <TouchableOpacity onPress={startGenerate} >
+                                            <Image
+                                                style={styles.image}
+                                                source={require('../assets/images/start.png')}
+                                                contentFit="cover"
+                                                transition={1000}
+                                            />
+                                        </TouchableOpacity>
+                                    }
+                                    {isLoading == '0' &&
+                                        <ActivityIndicator />
+                                    }
+                                </>
 
                                 // <TouchableOpacity onPress={startGenerate} style={styles.btn_start}>
                                 //     <Text>START</Text>
