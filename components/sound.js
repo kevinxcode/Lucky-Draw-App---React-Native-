@@ -1,3 +1,7 @@
+import { Audio } from 'expo-av';
+
+
+
 // sound
 const soundObject = new Audio.Sound();
 

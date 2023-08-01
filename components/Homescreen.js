@@ -5,7 +5,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/color';
 import * as ScreenOrientation from "expo-screen-orientation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Audio } from 'expo-av';
 
 
 
