@@ -4,21 +4,27 @@ import { StyleSheet, Text, View, ImageBackground, SafeAreaView, TouchableOpacity
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/color';
 import * as ScreenOrientation from "expo-screen-orientation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Audio } from 'expo-av';
+
 
 
 export default function Homescreen() {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const [isIntervalRunning, setIsIntervalRunning] = useState('0');
     const [enteredNumber2, setenteredNumber2] = useState('------');
+    const [arrData, setarrData] = useState([]);
 
     const intervalRef = React.useRef(null);
     const startGenerate = () => {
+        // playSound();
+        getArrLC();
         setIsIntervalRunning('1');
         intervalRef.current = setInterval(getGenerate, 30);
     }
 
     const stopGenerate = () => {
+        stopSound();
         setIsIntervalRunning('0');
         clearInterval(intervalRef.current);
     }
@@ -29,16 +35,50 @@ export default function Homescreen() {
         getRandomNumber(myArr);
     };
 
-
     const getRandomNumber = (myArr) => {
         const randomObject = myArr[Math.floor(Math.random() * myArr.length)];
         setenteredNumber2(randomObject);
     }
+    
+    const getArrLC = async () => {
+        let myArr = ['AAAAAAA', 'BBBBBBB', 'CCCCCCC', 'DDDDDDDD',
+            'EEEEEEEE', 'FFFFFFF', 'GGGGGGGG', 'HHHHHHHH'];
+
+        fetch('https://admin.digitalevent.online/api/lc')
+          .then((response) => response.json())
+          .then((json) => {
+            console.log([json]);
+            console.log(myArr);
+          })
+          .catch((error) => {console.log(error)});
+      }
+
+    // sound
+    const soundObject = new Audio.Sound();
+
+    const playSound = async () => {
+        try {
+          await soundObject.loadAsync(require('../assets/song.mp3'));
+          await soundObject.playAsync();
+        } catch (error) {
+          console.error('Error playing sound:', error);
+        }
+      };
+    
+      const stopSound = async () => {
+        try {
+        await soundObject.loadAsync(require('../assets/song.mp3'));
+          await soundObject.pauseAsync();
+        } catch (error) {
+          console.error('Error stopping sound:', error);
+        }
+      };
+      // end sound
     return (
         <LinearGradient colors={[Colors.accent500, Colors.accent600]} style={styles.rootScreen}>
-
+            <StatusBar hidden />
             <ImageBackground
-                source={require('../assets/images/bg_aniv2.png')}
+                source={require('../assets/images/bg_aniv3.png')}
                 resizeMode="cover"
                 style={styles.rootScreen}
                 imageStyle={styles.backgroundImage}
@@ -49,8 +89,9 @@ export default function Homescreen() {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
                         <View style={{ width: 100, height: 100 }}>
+                           
                             {isIntervalRunning == '0' && (
-
+                                
                                 <TouchableOpacity onPress={startGenerate} >
                                     <Image
                                         style={styles.image}
