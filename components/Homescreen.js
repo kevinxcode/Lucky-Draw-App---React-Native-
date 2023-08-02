@@ -66,6 +66,7 @@ export default function Homescreen() {
             console.log(error);
         }
     }
+    // async storage json array
     const detailLucky = 'detailLucky';
     const getdetailLucky = () => {
         setisLoading('0')
