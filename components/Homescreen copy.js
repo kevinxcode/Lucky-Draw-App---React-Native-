@@ -20,12 +20,15 @@ export default function Homescreen() {
     const intervalRef = React.useRef(null);
 
     const startGenerate = () => {
+        // playSound();
+
         setIsIntervalRunning('1');
         intervalRef.current = setInterval(getGenerate, 30);
     }
 
     const stopGenerate = () => {
         findPersonByName();
+        // stopSound();
         setIsIntervalRunning('0');
         clearInterval(intervalRef.current);
     }
@@ -41,41 +44,64 @@ export default function Homescreen() {
         setenteredNumber2(randomObject);
     }
 
+
+
+    useEffect(() => {
+        urlgetArrLC();
+        getDetailLC();
+    }, []);
+
+
+    const urlgetArrLC = async () => {
+        fetch('https://admin.digitalevent.online/api/lcList')
+            .then((response) => response.json())
+            .then((json) => {
+                setarrData(json);
+                setisLoading('1');
+            })
+            .catch((error) => { console.log(error) });
+    }
+
+    const getDetailLC = async () => {
+        setisLoading('0');
+        fetch('https://admin.digitalevent.online/api/lsFullArray')
+            .then((response) => response.json())
+            .then((json) => {
+                setdetailArr(json);
+                // saveArrLC(JSON.stringify(json));
+                // console.log(JSON.stringify(json));
+                setisLoading('1');
+            })
+            .catch((error) => { console.log(error) });
+    }
+
     const findPersonByName = () => {
         const bruno =  detailArr.find((person) => person.unique_code === enteredNumber2);
         setresultData(bruno.fullname)
         console.log(bruno.fullname);
     };
 
-    useEffect(() => {
-        getlistLucky();
-        getdetailLucky();
-    }, []);
 
-    const listLucky = 'listLucky';
-    const getlistLucky = () => {
-        setisLoading('0')
+    const keyAsync = 'arrLc';
+    const getArrLC = () => {
         try {
-            AsyncStorage.getItem(listLucky).then(req => JSON.parse(req))
-            .then(json => {
-                setarrData(json)
-                setisLoading('1')
+            AsyncStorage.getItem(keyAsync).then(value => {
+                if (value != null) {
+                    // console.log(value);
+                    const bruno =  value.find((person) => person.nik === '971123');
+                    console.log(bruno);
+                } else {
+                    getDetailLC();
+                }
             })
-            .catch(error => console.log('error!'));
         } catch (error) {
             console.log(error);
         }
     }
-    const detailLucky = 'detailLucky';
-    const getdetailLucky = () => {
-        setisLoading('0')
+
+    const saveArrLC = async jsonValue => {
         try {
-            AsyncStorage.getItem(detailLucky).then(req => JSON.parse(req))
-            .then(json => {
-                setdetailArr(json);
-                setisLoading('1')
-            })
-            .catch(error => console.log('error!'));
+            await AsyncStorage.setItem(keyAsync, jsonValue);
         } catch (error) {
             console.log(error);
         }
@@ -115,6 +141,10 @@ export default function Homescreen() {
                                         <ActivityIndicator />
                                     }
                                 </>
+
+                                // <TouchableOpacity onPress={startGenerate} style={styles.btn_start}>
+                                //     <Text>START</Text>
+                                // </TouchableOpacity>
                             )}
                             {isIntervalRunning == '1' && (
                                 <TouchableOpacity onPress={stopGenerate} >
