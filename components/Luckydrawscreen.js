@@ -5,10 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/color';
 import * as ScreenOrientation from "expo-screen-orientation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 
-export default function Homescreen() {
+export default function Luckydrawscreen({ navigation }) {
     const [isLoading, setisLoading] = useState('0');
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const [isIntervalRunning, setIsIntervalRunning] = useState('0');
@@ -42,7 +43,7 @@ export default function Homescreen() {
     }
 
     const findPersonByName = () => {
-        const bruno =  detailArr.find((person) => person.unique_code === enteredNumber2);
+        const bruno = detailArr.find((person) => person.unique_code === enteredNumber2);
         setresultData(bruno.fullname)
         console.log(bruno.fullname);
     };
@@ -57,11 +58,11 @@ export default function Homescreen() {
         setisLoading('0')
         try {
             AsyncStorage.getItem(listLucky).then(req => JSON.parse(req))
-            .then(json => {
-                setarrData(json)
-                setisLoading('1')
-            })
-            .catch(error => console.log('error!'));
+                .then(json => {
+                    setarrData(json)
+                    setisLoading('1')
+                })
+                .catch(error => console.log('error!'));
         } catch (error) {
             console.log(error);
         }
@@ -72,14 +73,17 @@ export default function Homescreen() {
         setisLoading('0')
         try {
             AsyncStorage.getItem(detailLucky).then(req => JSON.parse(req))
-            .then(json => {
-                setdetailArr(json);
-                setisLoading('1')
-            })
-            .catch(error => console.log('error!'));
+                .then(json => {
+                    setdetailArr(json);
+                    setisLoading('1')
+                })
+                .catch(error => console.log('error!'));
         } catch (error) {
             console.log(error);
         }
+    }
+    const backDashboard = () => {
+        navigation.replace('DASHBOARD');
     }
     return (
         <LinearGradient colors={[Colors.accent500, Colors.accent600]} style={styles.rootScreen}>
@@ -90,6 +94,13 @@ export default function Homescreen() {
                 style={styles.rootScreen}
                 imageStyle={styles.backgroundImage}
             >
+
+                <View style={styles.btn_top}>
+                    <TouchableOpacity onPress={() => navigation.replace('DASHBOARD')}>
+                        <FontAwesome5 style={{ textAlign: 'center' }} size={20} name={'arrow-circle-left'} solid />
+                    </TouchableOpacity>
+                </View>
+
                 <SafeAreaView style={[styles.rootScreen, { justifyContent: 'center' }]}>
                     {isLoading == '1' &&
                         <View style={[styles.inputContainer]}>
@@ -189,4 +200,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    btn_top: {
+        position: 'absolute',
+        backgroundColor: '#DAA520', width: 50,
+        height: 35, margin: 20, justifyContent: 'center',
+        alignItems: 'center', borderRadius: 8, opacity: 0.7,
+        borderBottomColor: '#FFD700', borderWidth: 1, zIndex: 999999,
+    },
+    
 });

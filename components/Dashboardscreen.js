@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/color';
 import { useNavigation } from '@react-navigation/native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 
@@ -13,8 +14,7 @@ export default function Dashboardscreen() {
     const navigation = useNavigation();
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const [isLoading, setisLoading] = useState('0');
-
-
+    
     const btnLuckydraw = () => {
         urlgetArrLC();
         getDetailLC();
@@ -38,7 +38,7 @@ export default function Dashboardscreen() {
             .then((json) => {
                 savedetailLucky(JSON.stringify(json));
                 setisLoading('0');
-                navigation.navigate('HOME');
+                navigation.navigate('LUCKYDRAW');
             })
             .catch((error) => { console.log(error) });
     }
@@ -69,9 +69,7 @@ export default function Dashboardscreen() {
                 style={styles.rootScreen}
                 imageStyle={styles.backgroundImage}
             >
-                <View style={styles.btn_top}>
-                    <Text>MENU</Text>
-                </View>
+
                 <SafeAreaView style={[styles.rootScreen, { justifyContent: 'center' }]}>
                     <View style={{ height: 80, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
                         {isLoading == '0' &&
@@ -84,7 +82,7 @@ export default function Dashboardscreen() {
                                 </TouchableOpacity>
                             </>
                         }
-                        {isLoading == '1' && 
+                        {isLoading == '1' &&
                             <ActivityIndicator />
                         }
 
@@ -118,5 +116,6 @@ const styles = StyleSheet.create({
         height: 30, margin: 20, justifyContent: 'center',
         alignItems: 'center', borderRadius: 8, opacity: 0.7,
         borderBottomColor: '#FFD700', borderWidth: 1
-    }
+    },
+    
 })

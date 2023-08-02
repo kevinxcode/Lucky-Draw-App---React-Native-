@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Homescreen from './components/Homescreen';
+import Luckydrawscreen from './components/Luckydrawscreen';
 import Dashboardscreen from './components/Dashboardscreen';
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
         }}
          />
         
-        <Stack.Screen name="HOME" component={Homescreen} 
+        <Stack.Screen name="LUCKYDRAW" component={Luckydrawscreen} 
          options={{
           headerShown: false,
           tabBarStyle: { display: "none" },
