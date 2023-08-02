@@ -30,7 +30,7 @@ export default function Resultscreen({route}) {
                     </TouchableOpacity>
                 </View>
                 <SafeAreaView style={[styles.rootScreen]}>
-                    <View style={{ width: '100%', position: 'absolute', marginTop: 15, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ width: '100%', backgroundColor:'#000', position: 'absolute', marginTop: 12, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#fff' }}>THE WINNER</Text>
                     </View>
 
