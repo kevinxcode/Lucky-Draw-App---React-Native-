@@ -8,8 +8,6 @@ import Colors from '../constants/color';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-
-
 export default function Resultscreen({ route }) {
     const navigation = useNavigation();
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
@@ -72,7 +70,6 @@ const styles = StyleSheet.create({
         margin: 10,
         borderColor: Colors.gold0002,
         borderWidth: 2,
-
     },
     btn_top: {
         position: 'absolute',
@@ -80,7 +77,6 @@ const styles = StyleSheet.create({
         height: 30, margin: 10, justifyContent: 'center',
         alignItems: 'center', borderRadius: 8, opacity: 0.7,
         borderColor: Colors.gold0002, borderWidth: 1, zIndex: 9999,
-
     },
     image_view: {
         flex: 1,
