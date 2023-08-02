@@ -15,8 +15,6 @@ export default function Resultscreen({route}) {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const [isLoading, setisLoading] = useState('0');
 
-
-
     return (
         <LinearGradient colors={[Colors.accent500, Colors.accent600]} style={styles.rootScreen}>
             <StatusBar hidden />
