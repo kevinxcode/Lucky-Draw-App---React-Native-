@@ -78,7 +78,7 @@ export default function Dashboardscreen() {
                                     <Text style={{ color: '#fff', fontWeight: 'bold' }}>LUCKY DRAW</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.button}>
-                                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>GREETING'S</Text>
+                                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>GREETING'S CARD</Text>
                                 </TouchableOpacity>
                             </>
                         }
