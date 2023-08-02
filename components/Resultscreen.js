@@ -10,7 +10,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 
-export default function Resultscreen() {
+export default function Resultscreen({route}) {
     const navigation = useNavigation();
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const [isLoading, setisLoading] = useState('0');
@@ -39,10 +39,10 @@ export default function Resultscreen() {
                     <View style={[styles.rootScreen, { justifyContent: 'center', alignItems: 'center' }]}>
                         <View style={{ padding: 12, backgroundColor: Colors.gold0001, opacity: 0.8, width: '90%', height: '78%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
                             <View style={{ backgroundColor: Colors.gold0002, width: '50%', height: '100%', borderEndWidth: 3, borderEndColor: Colors.gold0001, padding: 8, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: 30, color: '#fff', fontWeight: 'bold', margin: 10, borderBottomWidth: 2, borderColor: '#DAA520' }}>JTNE60365</Text>
-                                <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold', margin: 0 }}>220009</Text>
-                                <Text style={{ fontSize: 25, color: '#fff', fontWeight: 'bold', margin: 2 }}>KEVIN ALNIZAR</Text>
-                                <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold', margin: 0 }}>HR</Text>
+                                <Text style={{ fontSize: 30, color: '#fff', fontWeight: 'bold', margin: 10, borderBottomWidth: 2, borderColor: '#DAA520' }}>{route.params.param_code}</Text>
+                                <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold', margin: 0 }}>{route.params.param_nik}</Text>
+                                <Text style={{ fontSize: 25, color: '#fff', fontWeight: 'bold', margin: 2 }}>{route.params.param_fullname}</Text>
+                                <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold', margin: 0 }}>{route.params.param_dept}</Text>
                             </View>
                             <View style={{ backgroundColor: Colors.gold0002, width: '50%', height: '100%', padding: 8, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image

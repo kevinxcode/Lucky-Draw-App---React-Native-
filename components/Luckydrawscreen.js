@@ -16,7 +16,7 @@ export default function Luckydrawscreen({ navigation }) {
     const [enteredNumber2, setenteredNumber2] = useState('------');
     const [arrData, setarrData] = useState([]);
     const [detailArr, setdetailArr] = useState([]);
-    const [resultData, setresultData] = useState('');
+    
 
     const intervalRef = React.useRef(null);
 
@@ -43,12 +43,19 @@ export default function Luckydrawscreen({ navigation }) {
     }
 
     const findPersonByName = () => {
-        const bruno = detailArr.find((person) => person.unique_code === enteredNumber2);
-        setresultData(bruno.fullname)
-        console.log(bruno.fullname);
+        const findArr = detailArr.find((person) => person.unique_code === enteredNumber2);
+        console.log(findArr.nik);
+        console.log(findArr.fullname);
+        console.log(findArr.department);
+        console.log(findArr.unique_code);
 
         const intervalId_result = setInterval(() => {
-            navigation.navigate('RESULT');
+            navigation.navigate('RESULT', {
+                param_nik: findArr.nik, 
+                param_fullname: findArr.fullname,
+                param_dept: findArr.department,
+                param_code: findArr.unique_code,
+            });
             clearInterval(intervalId_result)
           }, 1200);
     };
@@ -113,9 +120,7 @@ export default function Luckydrawscreen({ navigation }) {
                         </View>
                     }
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                        <Text>{resultData}</Text>
                         <View style={{ width: 100, height: 100 }}>
-
                             {isIntervalRunning == '0' && (
                                 <>
                                     {isLoading == '1' &&
@@ -142,13 +147,9 @@ export default function Luckydrawscreen({ navigation }) {
                                         transition={1000}
                                     />
                                 </TouchableOpacity>
-
                             )}
                         </View>
-
-
                     </View>
-
                 </SafeAreaView>
             </ImageBackground>
         </LinearGradient>
