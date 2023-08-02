@@ -27,7 +27,7 @@ export default function Resultscreen() {
                 imageStyle={styles.backgroundImage}
             >
                 <View style={styles.btn_top}>
-                    <TouchableOpacity onPress={() => navigation.replace('DASHBOARD')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('LUCKYDRAW')}>
                         <FontAwesome5 style={{ textAlign: 'center' }} size={20} name={'arrow-circle-left'} solid />
                     </TouchableOpacity>
                 </View>
@@ -46,7 +46,7 @@ export default function Resultscreen() {
                             </View>
                             <View style={{ backgroundColor: Colors.gold0002, width: '50%', height: '100%', padding: 8, justifyContent: 'center', alignItems: 'center' }}>
                                 <Image
-                                    style={styles.image}
+                                    style={styles.image_view}
                                     source={require('../assets/images/people.jpg')}
                                     contentFit="cover"
                                     transition={1000}
@@ -82,10 +82,10 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.gold0001, width: 50,
         height: 30, margin: 10, justifyContent: 'center',
         alignItems: 'center', borderRadius: 8, opacity: 0.7,
-        borderColor: Colors.gold0002, borderWidth: 1, zIndex: 999999,
+        borderColor: Colors.gold0002, borderWidth: 1, zIndex: 9999,
 
     },
-    image: {
+    image_view: {
         flex: 1,
         width: '100%',
         backgroundColor: '#0553',

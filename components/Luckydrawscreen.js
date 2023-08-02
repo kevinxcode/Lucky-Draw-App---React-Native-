@@ -46,6 +46,11 @@ export default function Luckydrawscreen({ navigation }) {
         const bruno = detailArr.find((person) => person.unique_code === enteredNumber2);
         setresultData(bruno.fullname)
         console.log(bruno.fullname);
+
+        const intervalId_result = setInterval(() => {
+            navigation.navigate('RESULT');
+            clearInterval(intervalId_result)
+          }, 1200);
     };
 
     useEffect(() => {
@@ -205,7 +210,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.gold0001, width: 50,
         height: 35, margin: 20, justifyContent: 'center',
         alignItems: 'center', borderRadius: 8, opacity: 0.7,
-        borderColor: Colors.gold0002, borderWidth: 1, zIndex: 999999,
+        borderColor: Colors.gold0002, borderWidth: 1, zIndex: 9999,
     },
     
 });

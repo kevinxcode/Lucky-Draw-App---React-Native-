@@ -80,9 +80,6 @@ export default function Dashboardscreen() {
                                 <TouchableOpacity style={styles.button}>
                                     <Text style={{ color: '#fff', fontWeight: 'bold' }}>GREETING'S</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={()=> navigation.navigate('RESULT')} style={styles.button}>
-                                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>RESULT</Text>
-                                </TouchableOpacity>
                             </>
                         }
                         {isLoading == '1' &&
