@@ -10,7 +10,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 
-export default function Resultscreen({route}) {
+export default function Resultscreen({ route }) {
     const navigation = useNavigation();
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
     const [isLoading, setisLoading] = useState('0');
@@ -29,11 +29,10 @@ export default function Resultscreen({route}) {
                         <FontAwesome5 style={{ textAlign: 'center' }} size={20} name={'arrow-circle-left'} solid />
                     </TouchableOpacity>
                 </View>
+                <View style={{ width: '100%', backgroundColor: '#000', position: 'absolute', marginTop: 12, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#fff' }}>THE WINNER</Text>
+                </View>
                 <SafeAreaView style={[styles.rootScreen]}>
-                    <View style={{ width: '100%', backgroundColor:'#000', position: 'absolute', marginTop: 12, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#fff' }}>THE WINNER</Text>
-                    </View>
-
                     <View style={[styles.rootScreen, { justifyContent: 'center', alignItems: 'center' }]}>
                         <View style={{ padding: 12, backgroundColor: Colors.gold0001, opacity: 0.8, width: '90%', height: '78%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
                             <View style={{ backgroundColor: Colors.gold0002, width: '50%', height: '100%', borderEndWidth: 3, borderEndColor: Colors.gold0001, padding: 8, justifyContent: 'center', alignItems: 'center' }}>
