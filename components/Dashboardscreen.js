@@ -80,6 +80,9 @@ export default function Dashboardscreen() {
                                 <TouchableOpacity style={styles.button}>
                                     <Text style={{ color: '#fff', fontWeight: 'bold' }}>GREETING'S</Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity onPress={()=> navigation.navigate('RESULT')} style={styles.button}>
+                                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>RESULT</Text>
+                                </TouchableOpacity>
                             </>
                         }
                         {isLoading == '1' &&
@@ -99,23 +102,17 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
-        backgroundColor: '#DAA520',
+        backgroundColor: Colors.gold0001,
         width: 150,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 15,
         margin: 10,
-        borderColor: '#FFD700',
+        borderColor: Colors.gold0002,
         borderWidth: 2,
 
     },
-    btn_top: {
-        position: 'absolute',
-        backgroundColor: '#DAA520', width: 50,
-        height: 30, margin: 20, justifyContent: 'center',
-        alignItems: 'center', borderRadius: 8, opacity: 0.7,
-        borderBottomColor: '#FFD700', borderWidth: 1
-    },
+    
     
 })

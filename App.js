@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Luckydrawscreen from './components/Luckydrawscreen';
+import Resultscreen from './components/Resultscreen';
 import Dashboardscreen from './components/Dashboardscreen';
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -19,6 +20,13 @@ export default function App() {
          />
         
         <Stack.Screen name="LUCKYDRAW" component={Luckydrawscreen} 
+         options={{
+          headerShown: false,
+          tabBarStyle: { display: "none" },
+        }}
+         />
+
+          <Stack.Screen name="RESULT" component={Resultscreen} 
          options={{
           headerShown: false,
           tabBarStyle: { display: "none" },

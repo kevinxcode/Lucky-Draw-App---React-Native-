@@ -202,10 +202,10 @@ const styles = StyleSheet.create({
     },
     btn_top: {
         position: 'absolute',
-        backgroundColor: '#DAA520', width: 50,
+        backgroundColor: Colors.gold0001, width: 50,
         height: 35, margin: 20, justifyContent: 'center',
         alignItems: 'center', borderRadius: 8, opacity: 0.7,
-        borderBottomColor: '#FFD700', borderWidth: 1, zIndex: 999999,
+        borderColor: Colors.gold0002, borderWidth: 1, zIndex: 999999,
     },
     
 });
